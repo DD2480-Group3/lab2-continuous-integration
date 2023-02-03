@@ -16,25 +16,26 @@ public class MavenBuilder {
     }
 
     /**
-     * Tries to build the repository that is in the given path.
-     * Reads the pom.xml file of the given directory and builds the code with maven.
+     * Tries to build & test the repository that is in the given path.
+     * Reads the pom.xml file of the given directory then tries to build and test the code with
+     * the help of maven.
      */
     private void build() {
         Path currentRelativePath = Paths.get("");
         String current_path = currentRelativePath.toAbsolutePath().toString(); //Get your current dir. path.
 
         InvocationRequest request = new DefaultInvocationRequest();
-        request.setPomFile( new File( current_path + "/pom.xml" ) ); //Specify path
-        //System.out.println(current_path + "\\pom.xml");
-        request.setGoals(Collections.singletonList("compile"));
+        request.setPomFile( new File( current_path + "/cloned/pom.xml" ) ); //Specify path
+        //System.out.println(current_path + "/cloned/pom.xml");
+        request.setGoals(Collections.singletonList("test"));
 
         Invoker invoker = new DefaultInvoker();
-        //invoker.setMavenHome(new File(System.getenv().get("MAVEN_HOME")));
+        invoker.setMavenHome(new File(System.getenv().get("MAVEN_HOME")));
 
         try {
             invoker.execute( request );
         } catch (MavenInvocationException e) {
-            throw new RuntimeException("Build failed. \n" + e);
+            throw new RuntimeException("Build failed.", e);
         }
     }
 
