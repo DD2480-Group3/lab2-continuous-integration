@@ -25,6 +25,9 @@ public class ContinuousIntegrationServer extends AbstractHandler
         baseRequest.setHandled(true);
 
         System.out.println(target);
+        System.out.println(baseRequest);
+        System.out.println(request);
+        System.out.println(response);
 
         // here you do all the continuous integration tasks
         // for example
