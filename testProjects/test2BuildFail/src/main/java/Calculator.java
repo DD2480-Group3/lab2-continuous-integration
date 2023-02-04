@@ -1,0 +1,9 @@
+public class Calculator {
+    public static void main(String[] args) {
+    }
+
+    public int add(int x, int y) {
+        int sum = x + y;
+        return sum
+    }
+}
