@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -6,36 +5,26 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>lab2-continous-integration</artifactId>
+    <artifactId>assignment2</artifactId>
     <version>1.0-SNAPSHOT</version>
 
 
     <properties>
 
         <!-- Java version -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <compiler.release>11</compiler.release>
         <javadoc.source>11</javadoc.source>
 
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+
 
     </properties>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version> <!-- see surefire-page for available versions -->
-                <configuration>
-                    <systemPropertyVariables>
-                        <maven.home>C:\Program Files\apache-maven-3.8.7</maven.home>
-                    </systemPropertyVariables>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.eclipse.jetty.aggregate/jetty-all -->
@@ -61,6 +50,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20220924</version>
@@ -72,13 +67,13 @@
             <version>4.8.0.201706111038-r</version>
         </dependency>
 
-        <!-- Javax Servlet - https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
             <scope>compile</scope>
         </dependency>
+
 
         <!--Ngrok-->
         <!-- https://mvnrepository.com/artifact/com.ngrok/ngrok-api-java -->
@@ -102,9 +97,18 @@
             <artifactId>maven-invoker</artifactId>
             <version>3.2.0</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
 
 
     </dependencies>
+
+
+
 
 
 </project>
