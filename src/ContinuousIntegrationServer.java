@@ -27,7 +27,7 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         System.out.println(request);
         System.out.println(response);
 
-        Compiler compilor = new Compiler(request);
+        Compiler compiler = new Compiler(request);
 
         // here you do all the continuous integration tasks
         // for example
