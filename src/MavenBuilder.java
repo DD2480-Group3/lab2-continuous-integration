@@ -8,11 +8,12 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
+import java.util.List;
 
 public class MavenBuilder {
 
     public MavenBuilder() {
-        build();
+
     }
 
     /**
@@ -20,22 +21,23 @@ public class MavenBuilder {
      * Reads the pom.xml file of the given directory then tries to build and test the code with
      * the help of maven.
      */
-    private void build() {
+    private boolean build(List<String> goals, String toCompile) {
         Path currentRelativePath = Paths.get("");
         String current_path = currentRelativePath.toAbsolutePath().toString(); //Get your current dir. path.
 
         InvocationRequest request = new DefaultInvocationRequest();
-        request.setPomFile( new File( current_path + "/cloned/pom.xml" ) ); //Specify path
-        //System.out.println(current_path + "/cloned/pom.xml");
-        request.setGoals(Collections.singletonList("test"));
+        request.setPomFile( new File( current_path + toCompile ) ); //Specify path
+        System.out.println(current_path + toCompile);
+        request.setGoals(goals);
 
         Invoker invoker = new DefaultInvoker();
         invoker.setMavenHome(new File(System.getenv().get("MAVEN_HOME")));
 
         try {
-            invoker.execute( request );
+            InvocationResult result = invoker.execute( request );
+            return result.getExitCode() == 0;
         } catch (MavenInvocationException e) {
-            throw new RuntimeException("Build failed.", e);
+            return false;
         }
     }
 
