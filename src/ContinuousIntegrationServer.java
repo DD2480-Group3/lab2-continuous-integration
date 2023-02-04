@@ -3,6 +3,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletException;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.Request;
@@ -37,6 +38,14 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         // for example
         // 1st clone your repository
         // 2nd compile the code
+
+
+        boolean sucessBuild = builder.build(Collections.singletonList("compile"), "/cloned/pom.xml");
+        boolean sucessTests = builder.build(Collections.singletonList("test"), "/cloned/pom.xml");
+        System.out.println("builds result");
+        System.out.println(sucessBuild);
+        System.out.println("tests result");
+        System.out.println(sucessTests);
 
         response.getWriter().println("CI job done");
     }
