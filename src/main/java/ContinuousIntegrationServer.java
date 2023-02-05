@@ -8,6 +8,7 @@ import java.util.Collections;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.eclipse.jgit.api.Git;
 
 
 /**
@@ -36,8 +37,9 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         System.out.println(reqPayload);
         if(reqPayload != null){
 
-                System.out.println("here");
-                Compiler compiler = new Compiler(request);
+                Compiler compiler = new Compiler();
+                Git git = compiler.cloneRepo(request);
+                compiler.deleteRepo(git);
                 MavenBuilder builder = new MavenBuilder();
 
                 boolean successBuild = builder.build(Collections.singletonList("compile"), "/testProjects/test1Success/pom.xml");
