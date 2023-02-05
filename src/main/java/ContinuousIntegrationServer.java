@@ -15,6 +15,7 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
  * See the Jetty documentation for API documentation of those classes.
  */
 public class ContinuousIntegrationServer extends AbstractHandler {
+
     public void handle(String target,
             Request baseRequest,
             HttpServletRequest request,
@@ -30,9 +31,32 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         System.out.println(request);
         System.out.println(response);
 
+        String reqPayload = request.getParameter("payload");
 
-        Compiler compiler = new Compiler(request);
-        MavenBuilder builder = new MavenBuilder();
+        System.out.println(reqPayload);
+        if(reqPayload != null){
+
+                System.out.println("here");
+                Compiler compiler = new Compiler(request);
+                MavenBuilder builder = new MavenBuilder();
+
+                boolean successBuild = builder.build(Collections.singletonList("compile"), "/testProjects/test1Success/pom.xml");
+
+                if(successBuild) {
+                    System.out.println("Builds success");
+                } else {
+                    System.out.println("Builds failed");
+                }
+
+                boolean successTests = builder.build(Collections.singletonList("test"), "/testProjects/test1Success/pom.xml");
+
+                if(successTests) {
+                    System.out.println("Test success");
+                } else {
+                    System.out.println("Test failed");
+
+            }
+        }
 
         // here you do all the continuous integration tasks
         // for example
@@ -40,21 +64,6 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         // 2nd compile the code
 
 
-        boolean successBuild = builder.build(Collections.singletonList("compile"), "/testProjects/test1Success/pom.xml");
-
-        if(successBuild) {
-            System.out.println("Builds success");
-        } else {
-            System.out.println("Builds failed");
-        }
-
-        boolean successTests = builder.build(Collections.singletonList("test"), "/testProjects/test1Success/pom.xml");
-
-        if(successTests) {
-            System.out.println("Test success");
-        } else {
-            System.out.println("Test failed");
-        }
 
         response.getWriter().println("CI job done");
     }
