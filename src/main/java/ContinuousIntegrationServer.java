@@ -30,11 +30,12 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         System.out.println(baseRequest);
         System.out.println(request);
         System.out.println(response);
-        
-        String eventType = request.getHeader("type");
+
         String reqPayload = request.getParameter("payload");
-        if(reqPayload != null && eventType != null){
-            if(eventType.equals("push")){
+
+        System.out.println(reqPayload);
+        if(reqPayload != null){
+
                 System.out.println("here");
                 Compiler compiler = new Compiler(request);
                 MavenBuilder builder = new MavenBuilder();
@@ -53,7 +54,7 @@ public class ContinuousIntegrationServer extends AbstractHandler {
                     System.out.println("Test success");
                 } else {
                     System.out.println("Test failed");
-                }
+
             }
         }
 
