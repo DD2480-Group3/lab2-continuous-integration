@@ -26,9 +26,9 @@ public class Compiler {
      * Checks that the event is a push
     */
     public void cloneRepo(HttpServletRequest request) {
-        String eventType = request.getHeader("type");
+
         String reqPayload = request.getParameter("payload");
-        if (reqPayload != null && eventType.equals("type")) {
+        if (reqPayload != null) {
             JSONObject payloadJSON = new JSONObject(reqPayload);            // create JSONObject from payload
             JSONObject repoJSON = payloadJSON.getJSONObject("repository");  // get JSONObject for the repository
             String reponame = repoJSON.getString("name");

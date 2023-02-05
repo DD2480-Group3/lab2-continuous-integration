@@ -35,6 +35,8 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+
+
         </plugins>
     </build>
 
@@ -46,8 +48,9 @@
             <groupId>org.eclipse.jetty.aggregate</groupId>
             <artifactId>jetty-all</artifactId>
             <version>7.0.2.v20100331</version>
-            <scope>compile</scope>
+
         </dependency>
+
 
         <dependency>
             <groupId>org.slf4j</groupId>
