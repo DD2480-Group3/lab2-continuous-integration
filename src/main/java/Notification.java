@@ -64,4 +64,11 @@ public class Notification {
         HttpClients.createDefault().execute(httpPost);
         HttpClients.createDefault().close();
     }
+
+    public enum Status {
+        pending,
+        success,
+        failure,
+        error
+    }
 }
