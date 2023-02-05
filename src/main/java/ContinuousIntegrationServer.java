@@ -30,29 +30,32 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         System.out.println(baseRequest);
         System.out.println(request);
         System.out.println(response);
-
+        
         String eventType = request.getHeader("type");
-        if(eventType.equals("push")){
-            Compiler compiler = new Compiler(request);
-            MavenBuilder builder = new MavenBuilder();
+        String reqPayload = request.getParameter("payload");
+        if(reqPayload != null && eventType != null){
+            if(eventType.equals("push")){
+                System.out.println("here");
+                Compiler compiler = new Compiler(request);
+                MavenBuilder builder = new MavenBuilder();
 
-            boolean successBuild = builder.build(Collections.singletonList("compile"), "/testProjects/test1Success/pom.xml");
+                boolean successBuild = builder.build(Collections.singletonList("compile"), "/testProjects/test1Success/pom.xml");
 
-            if(successBuild) {
-                System.out.println("Builds success");
-            } else {
-                System.out.println("Builds failed");
-            }
+                if(successBuild) {
+                    System.out.println("Builds success");
+                } else {
+                    System.out.println("Builds failed");
+                }
 
-            boolean successTests = builder.build(Collections.singletonList("test"), "/testProjects/test1Success/pom.xml");
+                boolean successTests = builder.build(Collections.singletonList("test"), "/testProjects/test1Success/pom.xml");
 
-            if(successTests) {
-                System.out.println("Test success");
-            } else {
-                System.out.println("Test failed");
+                if(successTests) {
+                    System.out.println("Test success");
+                } else {
+                    System.out.println("Test failed");
+                }
             }
         }
-
 
         // here you do all the continuous integration tasks
         // for example
