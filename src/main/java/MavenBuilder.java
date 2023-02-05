@@ -24,7 +24,7 @@ public class MavenBuilder {
         Path currentRelativePath = Paths.get("");
         String current_path = currentRelativePath.toAbsolutePath().toString(); //Get your current dir. path.
 
-        InvocationRequest request = new DefaultInvocationRequest();
+        DefaultInvocationRequest request = new DefaultInvocationRequest();
         request.setPomFile(new File(current_path + toCompile)); //Specify path
         request.setGoals(goals);
 
@@ -39,12 +39,15 @@ public class MavenBuilder {
          }**/
 
         try {
-            invoker.execute(request);
+            InvocationResult result = invoker.execute(request);
+            System.out.println("---------------");
+            System.out.println(toCompile);
+            System.out.println(result);
+            return result.getExitCode() == 0;
         } catch (MavenInvocationException e) {
             return false;
             //throw new RuntimeException("Build failed.", e);
         }
 
-        return true;
     }
 }
