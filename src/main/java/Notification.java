@@ -10,7 +10,7 @@ public class Notification {
     /**
      * Method for creating the URL for the Git Status API
      */
-    public void gitStatusAPI(String owner, String repository, String shaHash) {
+    public String gitStatusAPI(String owner, String repository, String shaHash) {
         return "https://api.github.com/repos/" + owner + "/" + repository + "/statuses/" + shaHash;
     }
 
@@ -34,8 +34,8 @@ public class Notification {
     /**
      * Method for creating a HTTP POST request
      */
-    public static requestHTTP(String owner, String repository, String shaHash, Status state) {
-        String URL = gitStatusAPI(owner, repository, shaHash)
+    public static HttpPost requestHTTP(String owner, String repository, String shaHash, Status state) {
+        String URL = gitStatusAPI(owner, repository, shaHash);
 
         HttpPost httpPost = new HttpPost(URL);
 
@@ -58,8 +58,8 @@ public class Notification {
     /**
      * Method for sending a HTTP POST request commit status
      */
-    public static void sendHTTP(String owner, String repository, String shaHash, Status state)) {
-        HttpPost httppost = requestHTTP(owner, repository, shaHash, state)
+    public static void sendHTTP(String owner, String repository, String shaHash, Status state) {
+        HttpPost httppost = requestHTTP(owner, repository, shaHash, state);
 
         HttpClients.createDefault().execute(httpPost);
         HttpClients.createDefault().close();
