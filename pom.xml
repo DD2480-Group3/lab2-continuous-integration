@@ -29,11 +29,11 @@
                 <version>2.22.2</version> <!-- see surefire-page for available versions -->
 
                 <!--SET THIS ONLY IF USING WINDOWS & CONFIGURE YOUR PATH TO MAVEN-->
-                <!--<configuration>
+                <configuration>
                     <systemPropertyVariables>
                         <maven.home>C:\Program Files\apache-maven-3.8.7</maven.home>
                     </systemPropertyVariables>
-                </configuration> -->
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -103,6 +103,7 @@
             <artifactId>maven-invoker</artifactId>
             <version>3.2.0</version>
         </dependency>
+
 
 
     </dependencies>
