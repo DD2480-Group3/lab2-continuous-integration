@@ -15,7 +15,7 @@ This repository contains the code and tests for a CI server. The CI server clone
 
 ### Compilation
 
-The first thing that is done before compilation is clonining the repository. The payload of the http request is read as a JSON object, and from that, the repo url and branch is retrived. The repository is then cloned to a specified directory using the JGit api. The specified directory is first deleted in case there already exists one. The code is then compiled using the build function from mavenbuilder. The build function takes in the action to be performed, in this case "compile", and the path to the pom.xml file of the cloned repo. The build is then performed using maven invoker. The build function return true is the build was succesfull, and false if it failed. 
+The first thing that is done before compilation is clonining the repository. The payload of the http request is read as a JSON object, and from that, the repo url and branch is retrived. The repository is then cloned to a specified directory using the JGit api. The code is then compiled using the build function from mavenbuilder. The build function takes in the action to be performed, in this case "compile", and the path to the pom.xml file of the cloned repo. The build is then performed using maven invoker. The build function return true is the build was succesfull, and false if it failed. The directory for the cloning is then deleated. 
 
 The mavenbuilder compilation is unit tested by having two folders containing a pom.xml and a java file. In one of the folders, the java code should compile and in the other one it shouldn't. The unit tests assert that the one that should compile return true, and the other false. 
 
