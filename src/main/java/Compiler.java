@@ -2,6 +2,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
 
 import org.apache.commons.io.FileUtils;
 
@@ -51,6 +53,8 @@ public class Compiler {
                 Git git = Git.cloneRepository()
                         .setURI(clone_url)
                         .setDirectory(directory)
+                        .setBranchesToClone(Collections.singletonList(ref))
+                        .setBranch(ref)
                         .call();
                 System.out.println("Completed cloning");
                 return git;
