@@ -12,17 +12,21 @@ ngrok
 Maven  
 
 ## Set up
-1. Clone branch assesement
-Windows: in pom.xml set maven path in plugin section  
-Mac: comment out that section  
+1. Clone the branch called "assesement"
+2. Configure the pom.xml depending on what OS your using:
+ - Windows: In the configuration section of the pom.xml set your MAVEN_HOME, e.g. "<maven.home>C:\Program Files\apache-maven-3.8.7</maven.home>"
+ - Mac: Comment out that section  
 
 ## How to run server
-1. run `mvn clean compile exec:java` in terminal
-2. run ngrok http 8080 in a new terminal
-3. add the url from ngrok as webhook in github repo
+1. Run `mvn clean compile exec:java` in terminal
+2. Open up a new terminal and run "./ngrok http 8080"
+3. Go to Settings >> Webhooks in Github and click on Add webhook
+4. Add the url that was generated from ngrok + "/github-webhook/" (e.g. https://81e7-213-64-193-154.ngrok.io/github-webhook/)
 
 ## How to run tests for server
-1. run `mvn test` in terminal
+1. Run `mvn test` in terminal
+2. Go to http://localhost:8080 to check that the CI server is running locally
+3. Go to your Ngrok forwarding URL (eg. https://81e7-213-64-193-154.ngrok.io/github-webhook/) to check that the CI server is visible from the internet, hence visible from Github
 
 ## Implementation
 
@@ -45,5 +49,8 @@ The mavenbuilder testing is unit tested by having two folders containing a pom.x
 Louise Tidestav:  
 Implemented cloning of repo, and worked on parts of the compilation and building.
 Worked on the unit tests for compilation and builing. 
+
+Claudia Berlin: 
+Worked on parts of the compilation and building of the project.
 
 ### Essence
