@@ -61,4 +61,7 @@ Worked on the unit tests for compilation and builing.
 Claudia Berlin: 
 Helped to set up some parts of the compilation, building and testing parts. Worked on the notification feature that was implemented using REST API to create commit statuses. Also, tested the whole system to see that it worked properly. 
 
+Robert Scholz:
+Implemented the notification feature (P3).
+
 ### Essence
