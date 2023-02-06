@@ -7,9 +7,22 @@ This repository contains the code and tests for a CI server. The CI server clone
 
 ## Requirements
 
-## How to set up and run server
+Java version 11  
+ngrok  
+Maven  
+
+## Set up
+1. Clone branch assesement
+Windows: in pom.xml set maven path in plugin section  
+Mac: comment out that section  
+
+## How to run server
+1. run `mvn clean compile exec:java` in terminal
+2. run ngrok http 8080 in a new terminal
+3. add the url from ngrok as webhook in github repo
 
 ## How to run tests for server
+1. run `mvn test` in terminal
 
 ## Implementation
 
@@ -28,5 +41,9 @@ The mavenbuilder testing is unit tested by having two folders containing a pom.x
 ### Notification
 
 ### Statement of contribution
+
+Louise Tidestav:  
+Implemented cloning of repo, and worked on parts of the compilation and building.
+Worked on the unit tests for compilation and builing. 
 
 ### Essence
