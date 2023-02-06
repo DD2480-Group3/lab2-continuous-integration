@@ -9,18 +9,20 @@ This repository contains the code and tests for a CI server. The CI server clone
 
 Java version 11  
 ngrok  
-Maven  
+Maven
 
 ## Set up
 1. Clone the branch called "assesement"
-2. Configure the pom.xml depending on what OS your using:
- - Windows: In the configuration section of the pom.xml set your MAVEN_HOME, e.g. "<maven.home>C:\Program Files\apache-maven-3.8.7</maven.home>"
- - Mac: Comment out that section  
+2. Go to Settings >> Developer settings >> Personal access tokens and generate a Github token
+3. Copy this Github token key and insert it into the .env file
+3. Configure the pom.xml depending on what OS your using:
+ - Windows: In the configuration section of the pom.xml set your MAVEN_HOME path, e.g. "<maven.home>C:\Program Files\apache-maven-3.8.7</maven.home>"
+ - Mac: Comment out that section 
 
 ## How to run server
 1. Run `mvn clean compile exec:java` in terminal
 2. Open up a new terminal and run "./ngrok http 8080"
-3. Go to Settings >> Webhooks in Github and click on Add webhook
+3. Go to Settings >> Webhooks in your Github repo and click on Add webhook
 4. Add the url that was generated from ngrok + "/github-webhook/" (e.g. https://81e7-213-64-193-154.ngrok.io/github-webhook/)
 
 ## How to run tests for server
@@ -43,6 +45,12 @@ The tests in the cloned repo is run using the build function from mavenbuilder, 
 The mavenbuilder testing is unit tested by having two folders containing a pom.xml file and a test file. In one of the folders, the test should suceed, and in the other one it should fail. The unit tests assert that the one with tests that pass return true, and the other false. 
 
 ### Notification
+The notifcations feature was implemented using the REST API to create GitHub commit statuses. This was done by first creating a JSON object with the needed information specified by the GitHub documentation. Then an HTTP Post request containing the JSON object and a GitHub token, which was needed for authorization was created and sent to GitHub, using the REST API.
+
+An .env file was also added so that the users of the CI server can add their own GitHub token without needing to configure it in the code. 
+
+The notifcation feature was tested by having a separate branch with a simple maven project, where changes were commited to verify that it catches on to 
+the successes and fails of the build/tests of the project. Where all three possibilities were tested: build & test success, build failed, build success & test failed.  
 
 ### Statement of contribution
 
@@ -51,6 +59,6 @@ Implemented cloning of repo, and worked on parts of the compilation and building
 Worked on the unit tests for compilation and builing. 
 
 Claudia Berlin: 
-Worked on parts of the compilation and building of the project.
+Helped to set up some parts of the compilation, building and testing parts. Worked on the notification feature that was implemented using REST API to create commit statuses. Also, tested the whole system to see that it worked properly. 
 
 ### Essence
