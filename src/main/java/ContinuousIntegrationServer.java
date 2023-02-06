@@ -12,6 +12,7 @@ import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jgit.api.Git;
 
+import java.io.File;
 
 /**
  * Skeleton of a ContinuousIntegrationServer which acts as webhook
@@ -71,9 +72,24 @@ public class ContinuousIntegrationServer extends AbstractHandler {
                 compiler.deleteRepo(git);
             }
 
-
         }
-        response.getWriter().println("CI job done");
+
+
+        //Code for the web interface
+        if (target.equals("/history")) { //If the user navigates to /history
+            String historyDirectoryPath = "web/history"; //Set the path to the history directory
+            File historyDirectory = new File(historyDirectoryPath);
+            File[] historyFiles = historyDirectory.listFiles();
+
+            for (File file : historyFiles) { //For each file in the history directory
+                if (file.isFile()) { //If the file is a file and not a directory
+                    //Basic html code is used to display the files
+                    response.getWriter().println("<a href=/history/" + file.getName() + ">" + file.getName() + "</a><br><br>");
+                }
+            }
+        } else {
+            response.getWriter().println("CI job done");
+        }
 
 
 
