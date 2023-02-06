@@ -4,8 +4,7 @@ import javax.servlet.ServletException;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.EnumSet;
-import java.util.Enumeration;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.Request;
@@ -34,7 +33,8 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         System.out.println(request);
         System.out.println(response);
 
-        String gitHubToken = "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"; //Set up your Github Token!!!
+        Dotenv dotenv = Dotenv.load();
+        String gitHubToken = dotenv.get("GITHUB_TOKEN");
 
         String reqPayload = request.getParameter("payload");
         String event = request.getHeader("X-Github-Event");
