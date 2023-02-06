@@ -34,6 +34,8 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         System.out.println(request);
         System.out.println(response);
 
+        String gitHubToken = "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"; //Set up your Github Token!!!
+
         String reqPayload = request.getParameter("payload");
         String event = request.getHeader("X-Github-Event");
 
@@ -41,38 +43,38 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         if(reqPayload != null && event != null){
             if(event.equals("push")){
                 Notification notify = new Notification();
-                Compiler compiler = new Compiler(request);
+                Compiler compiler = new Compiler();
 
-                String status_url = compiler.get_status_url();
-                notify.postRequest("pending",status_url,"Not done yet");
-
-                Git git = compiler.cloneRepo();
+                Git git = compiler.cloneRepo(request);
                 MavenBuilder builder = new MavenBuilder();
 
-                boolean successBuild = builder.build(Collections.singletonList("compile"), "/cloned/pom.xml");
+                boolean successBuild = builder.build(Collections.singletonList("compile"), "/cloned/test/pom.xml");
+                String status_url = notify.gitStatusAPI(compiler.getOwner(), compiler.getRepository(), compiler.getShaHash());
 
+                //Only test if build succeeded.
                 if(successBuild) {
-                    System.out.println("Builds success");
-                    notify.postRequest("pending",status_url,"Build success");
+                    boolean successTests = builder.build(Collections.singletonList("test"), "/cloned/test/pom.xml");
+                    if(successTests) {
+                        notify.postRequest("success", status_url, "Build & Tests succeeded", gitHubToken);
+                        response.getWriter().println("Build & Test succeeded");
+                    } else {
+                        notify.postRequest("failure", status_url, "Build succeeded, but tests failed", gitHubToken);
+                        response.getWriter().println("Build succeeded, but tests failed");
+                    }
 
                 } else {
-                    System.out.println("Builds failed");
-                    notify.postRequest("failure",status_url,"Build failed");
+                    notify.postRequest("failure",status_url,"Build failed", gitHubToken);
+                    response.getWriter().println("Build failed");
                 }
 
-                boolean successTests = builder.build(Collections.singletonList("test"), "/cloned/pom.xml");
 
-                if(successTests) {
-                    System.out.println("Test success");
-                    notify.postRequest("success",status_url,"Build and test succeeded");
-                } else {
-                    System.out.println("Test failed");
-                    notify.postRequest("failure",status_url,"Test failed");
-
-                }
                 compiler.deleteRepo(git);
             }
+
+
         }
+        response.getWriter().println("CI job done");
+
 
 
 
@@ -83,7 +85,6 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 
 
 
-        response.getWriter().println("CI job done");
     }
  
     // used to start the CI server in command line
