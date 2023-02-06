@@ -39,10 +39,9 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 
                 Compiler compiler = new Compiler();
                 Git git = compiler.cloneRepo(request);
-                compiler.deleteRepo(git);
                 MavenBuilder builder = new MavenBuilder();
 
-                boolean successBuild = builder.build(Collections.singletonList("compile"), "/testProjects/test1Success/pom.xml");
+                boolean successBuild = builder.build(Collections.singletonList("compile"), "/cloned/pom.xml");
 
                 if(successBuild) {
                     System.out.println("Builds success");
@@ -50,14 +49,15 @@ public class ContinuousIntegrationServer extends AbstractHandler {
                     System.out.println("Builds failed");
                 }
 
-                boolean successTests = builder.build(Collections.singletonList("test"), "/testProjects/test1Success/pom.xml");
+                boolean successTests = builder.build(Collections.singletonList("test"), "/cloned/pom.xml");
 
                 if(successTests) {
                     System.out.println("Test success");
                 } else {
                     System.out.println("Test failed");
 
-            }
+                }
+                compiler.deleteRepo(git);
         }
 
         // here you do all the continuous integration tasks
