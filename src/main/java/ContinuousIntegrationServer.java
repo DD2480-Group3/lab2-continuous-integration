@@ -4,6 +4,8 @@ import javax.servlet.ServletException;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Enumeration;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.Request;
@@ -33,10 +35,11 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         System.out.println(response);
 
         String reqPayload = request.getParameter("payload");
+        String event = request.getHeader("X-Github-Event");
 
         System.out.println(reqPayload);
-        if(reqPayload != null){
-
+        if(reqPayload != null && event != null){
+            if(event.equals("push")){
                 Compiler compiler = new Compiler();
                 Git git = compiler.cloneRepo(request);
                 MavenBuilder builder = new MavenBuilder();
@@ -58,6 +61,7 @@ public class ContinuousIntegrationServer extends AbstractHandler {
 
                 }
                 compiler.deleteRepo(git);
+            }
         }
 
         // here you do all the continuous integration tasks
