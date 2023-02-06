@@ -40,29 +40,41 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         System.out.println(reqPayload);
         if(reqPayload != null && event != null){
             if(event.equals("push")){
-                Compiler compiler = new Compiler();
-                Git git = compiler.cloneRepo(request);
+                Notification notify = new Notification();
+                Compiler compiler = new Compiler(request);
+
+                String status_url = compiler.get_status_url();
+                notify.postRequest("pending",status_url,"Not done yet");
+
+                Git git = compiler.cloneRepo();
                 MavenBuilder builder = new MavenBuilder();
 
                 boolean successBuild = builder.build(Collections.singletonList("compile"), "/cloned/pom.xml");
 
                 if(successBuild) {
                     System.out.println("Builds success");
+                    notify.postRequest("pending",status_url,"Build success");
+
                 } else {
                     System.out.println("Builds failed");
+                    notify.postRequest("failure",status_url,"Build failed");
                 }
 
                 boolean successTests = builder.build(Collections.singletonList("test"), "/cloned/pom.xml");
 
                 if(successTests) {
                     System.out.println("Test success");
+                    notify.postRequest("success",status_url,"Build and test succeeded");
                 } else {
                     System.out.println("Test failed");
+                    notify.postRequest("failure",status_url,"Test failed");
 
                 }
                 compiler.deleteRepo(git);
             }
         }
+
+
 
         // here you do all the continuous integration tasks
         // for example
