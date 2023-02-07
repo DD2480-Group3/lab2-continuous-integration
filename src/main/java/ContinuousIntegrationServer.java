@@ -15,6 +15,8 @@ import org.eclipse.jgit.api.Git;
 //Imports for the web interface
 import java.io.File;
 import java.nio.file.*;
+//Imports for naming the history files
+import java.time.LocalDateTime;
 
 /**
  * Skeleton of a ContinuousIntegrationServer which acts as webhook
@@ -77,6 +79,26 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         }
 
 
+        if (target.equals("/filegen")) { //If the user navigates to filegen
+            //Store the build information (commit identifier, build date, build logs) in a text file
+            //The file will be stored at /web/history and its name will be the current date and time
+            String historyDirectoryPath = "web/history"; //Set the path to the history directory
+            //Create the history file
+            String datetime = java.time.LocalDateTime.now().toString(); //Get the current date and time
+            datetime = datetime.replace(":", "-"); //Replace the ":" with "," to make the file name valid
+            datetime = datetime.substring(0, 19); //Remove the milliseconds from the date and time
+            System.out.println(datetime); //Print the current date and time
+            String historyFilePath = historyDirectoryPath + "/" + datetime + ".txt"; //Set the path to the history file, including name
+            File historyFile = new File(historyFilePath);
+            if (!historyFile.exists()) { //If the file does not exist
+                historyFile.createNewFile(); //Create the history file
+                response.getWriter().println("<h1>New file created: /" + datetime + ".txt</h1>");
+                response.getWriter().println("<h2><a href=/history>History explorer</a></h2><br>");
+            }else{ //If the file exists
+                response.getWriter().println("<h1>A file with the same name does already exist.</h1>");}
+        }
+
+
         //Code for the web interface
         if (target.equals("/history")) { //If the user navigates to /history
             String historyDirectoryPath = "web/history"; //Set the path to the history directory
@@ -93,21 +115,18 @@ public class ContinuousIntegrationServer extends AbstractHandler {
             
         } else if (target.startsWith("/history/")) { //If the user navigates to /history/...
             String historyDirectoryPath = "web/history"; //Set the path to the history directory
-            File historyDirectory = new File(historyDirectoryPath);
-            File[] historyFiles = historyDirectory.listFiles();
 
             String fileName = target.substring(9); //Get the file name from the url (starts at position 9), will be used to check if the file exists
 
             //If the file exists, display it otherwise display an error message
+            response.getWriter().println("<h1>CI history explorer</h1>");
             if (new File(historyDirectoryPath + "/" + fileName).exists()) { //Check if the file exists
-                response.getWriter().println("<h1>CI history explorer</h1>");
                 response.getWriter().println("<h2>Currently at: " + fileName + "</h2>"); //Print the file name
                 response.getWriter().println("<h2><a href=/history>Back</a></h2><br><br>");
                 //Read the file into a string and display it
-                String fileContent2 = new String(Files.readAllBytes(Paths.get(historyDirectoryPath + "/" + fileName)));
-                response.getWriter().println(fileContent2);
+                String fileContent = new String(Files.readAllBytes(Paths.get(historyDirectoryPath + "/" + fileName)));
+                response.getWriter().println(fileContent);
             } else { //If the file does not exist display an error message
-                response.getWriter().println("<h1>CI history explorer</h1>");
                 response.getWriter().println("<h2><a href=/history>Back</a></h2><br><br>");
                 response.getWriter().println("<b>ERROR: File not found</b>");
             }
