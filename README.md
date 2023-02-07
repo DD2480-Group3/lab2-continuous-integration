@@ -64,4 +64,7 @@ Helped to set up some parts of the compilation, building and testing parts. Work
 Robert Scholz:
 Implemented the notification feature (P3).
 
+Fredrik Jansson:
+Started working on a web interface.
+
 ### Essence
