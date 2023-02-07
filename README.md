@@ -65,6 +65,6 @@ Robert Scholz:
 Implemented the notification feature (P3).
 
 Fredrik Jansson:
-Started working on a web interface.
+Created a web interface for directory listing and browsing files.
 
 ### Essence
