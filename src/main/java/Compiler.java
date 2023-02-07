@@ -14,8 +14,14 @@ import org.json.JSONObject;
 
 
 public class Compiler {
+    private String repository;
+    private String owner;
+    private String shaHash;
 
     public Compiler() {
+        repository = "";
+        owner = "";
+        shaHash = "";
 
     }
 
@@ -30,10 +36,21 @@ public class Compiler {
         String reqPayload = request.getParameter("payload");
         if (reqPayload != null) {
             JSONObject payloadJSON = new JSONObject(reqPayload);            // create JSONObject from payload
+            String sha = payloadJSON.getString("after");                //Get the after commit SHA
             JSONObject repoJSON = payloadJSON.getJSONObject("repository");  // get JSONObject for the repository
-            String reponame = repoJSON.getString("name");
+            String repo_name = repoJSON.getString("name");
             String clone_url = repoJSON.getString("clone_url");
             String ref = payloadJSON.getString("ref");                  // branch
+
+            //Get owner info
+            JSONObject ownerJSON = repoJSON.getJSONObject("owner");
+            String owner_name = ownerJSON.getString("name");
+
+            //Store info
+            repository = repo_name;
+            shaHash = sha;
+            owner = owner_name;
+
 
             // Try to clone to folder "cloned"
             System.out.println("Trying to clone url: " + clone_url);
@@ -65,6 +82,18 @@ public class Compiler {
         }
 
         return null;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public String getRepository() {
+        return repository;
+    }
+
+    public String getShaHash() {
+        return shaHash;
     }
 
     public void deleteRepo(Git git) throws IOException {

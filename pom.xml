@@ -79,7 +79,7 @@
         <dependency>
             <groupId>org.eclipse.jgit</groupId>
             <artifactId>org.eclipse.jgit</artifactId>
-            <version>4.8.0.201706111038-r</version>
+            <version>5.9.0.202009080501-r</version>
         </dependency>
 
         <!-- Javax Servlet - https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
@@ -120,7 +120,24 @@
             <version>1.1.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.json</artifactId>
+            <version>1.0.4</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.13</version>
+        </dependency>
+
+
     </dependencies>
+
+
+
 
 
 </project>
