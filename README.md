@@ -15,9 +15,7 @@ Maven
 1. Clone the branch called "assesement"
 2. Go to Settings >> Developer settings >> Personal access tokens and generate a Github token
 3. Copy this Github token key and insert it into the .env file
-3. Configure the pom.xml depending on what OS your using:
- - Windows: In the configuration section of the pom.xml set your MAVEN_HOME path, e.g. "<maven.home>C:\Program Files\apache-maven-3.8.7</maven.home>"
- - Mac: Comment out that section 
+3. For Windows users: Be sure to have the MAVEN_HOME path configured correctly.
 
 ## How to run server
 1. Run `mvn clean compile exec:java` in terminal
@@ -59,7 +57,9 @@ Implemented cloning of repo, and worked on parts of the compilation and building
 Worked on the unit tests for compilation and builing. 
 
 Claudia Berlin: 
-Helped to set up some parts of the compilation, building and testing parts. Worked on the notification feature that was implemented using REST API to create commit statuses. Also, tested the whole system to see that it worked properly. 
+Helped to set up some parts of the compilation, building and testing parts. 
+Worked on the notification feature that was implemented using REST API to create commit statuses.
+Also, tested the whole system to see that it worked properly. 
 
 Robert Scholz:
 Implemented the notification feature (P3).
