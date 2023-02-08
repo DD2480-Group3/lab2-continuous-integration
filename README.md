@@ -68,3 +68,5 @@ Fredrik Jansson:
 Created a web interface for directory listing and browsing files.
 
 ### Essence
+
+Our team is (almost) at the state of collaborating. The fundament of a team does exist within our group. The basic concepts of Seeded and Formed are fulfilled. The team has confidence in achieving the team missions and trust towards other team members. The communication is straight-forward in addressing project issues and problems, but the communication happens still in a distant and not really open manner. Due to this, we can't say yet that we work as a cohesive unit. Our goal for the remaining two projects is to improve communication and consequently to distribute the work more fairly also in regards of the different skill level. The output amount might be different, but we will have to distribute the input workload, especially in terms of time investment, more fairly. In summary, we can say that the closer integration of our team will be our top priority, which will help to fulfil the remaining gaps and reach the next state Performing.
