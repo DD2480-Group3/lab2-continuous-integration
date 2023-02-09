@@ -62,7 +62,7 @@ Worked on the notification feature that was implemented using REST API to create
 Also, tested the whole system to see that it worked properly. 
 
 Robert Scholz:
-Implemented the notification feature (P3).
+Implemented the notification feature (P3). Wrote the essence.
 
 Fredrik Jansson:
 Created a web interface for directory listing and browsing files.
