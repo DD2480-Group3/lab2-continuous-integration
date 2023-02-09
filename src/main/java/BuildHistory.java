@@ -6,8 +6,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Class that is used to create files that store past build information. Also displays this past build info on the web.
+ */
 public class BuildHistory {
 
+    /**
+     * Method that is used to create a file containing the info of the current build.
+     * @param response HTTP object for sending a response
+     * @param commitIdentifier The sha-hash of the commit
+     * @param description Given build log, describes if the build and tests succeeded or failed.
+     * @throws IOException
+     */
     public void createHistoryFile(HttpServletResponse response, String commitIdentifier, String description) throws IOException {
         String datetime = getTime();
         String historyDirectoryPath = "web/history"; //Set the path to the history directory
@@ -24,6 +34,10 @@ public class BuildHistory {
         }
     }
 
+    /**
+     * Creates a string with the current date and time
+     * @return current date and time
+     */
     private String getTime() {
         String datetime = java.time.LocalDateTime.now().toString(); //Get the current date and time
         datetime = datetime.replace(":", "-"); //Replace the ":" with "," to make the file name valid
@@ -31,6 +45,7 @@ public class BuildHistory {
         System.out.println(datetime); //Print the current date and time
         return datetime;
     }
+
 
     private void writeBuildInfo(String filepath, String commitIdentifier, String buildDate, String description) throws IOException {
         FileWriter writer = new FileWriter(filepath);
@@ -56,6 +71,13 @@ public class BuildHistory {
 
     }
 
+    /**
+     * Method for the web interface, it checks the current url the user is accessing and goes to the corresponding html page.
+     * Also creates the base structure of the html pages.
+     * @param response  HTTP object for sending a response.
+     * @param target gives where the user has navigated to (URL)
+     * @throws IOException
+     */
     public void navigateHistory(HttpServletResponse response, String target) throws IOException {
         String historyDirectoryPath = "web/history"; //Set the path to the history directory
         //Code for the web interface
