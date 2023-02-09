@@ -50,6 +50,11 @@ An .env file was also added so that the users of the CI server can add their own
 The notifcation feature was tested by having a separate branch with a simple maven project, where changes were commited to verify that it catches on to 
 the successes and fails of the build/tests of the project. Where all three possibilities were tested: build & test success, build failed, build success & test failed.  
 
+### History feature 
+This feature allows the CI server to keep record of past builds, where this history persists even if the server is rebooted. This is done by
+creating files containing the build log of each build and storing them in a separate directory called web/history. These files are later accessed and
+displayed on the webpage as html pages. 
+
 ### Statement of contribution
 
 Louise Tidestav:  
@@ -58,8 +63,9 @@ Worked on the unit tests for compilation and builing.
 
 Claudia Berlin: 
 Helped to set up some parts of the compilation, building and testing parts. 
-Worked on the notification feature that was implemented using REST API to create commit statuses.
-Also, tested the whole system to see that it worked properly. 
+Worked on the notification feature that was implemented using REST API to create commit statuses. 
+Refactored the history feature and tested it with the server.
+Also, tested the whole system to verify that it worked properly. 
 
 Robert Scholz:
 Implemented the notification feature (P3). Wrote the essence.
