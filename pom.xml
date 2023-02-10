@@ -18,7 +18,7 @@
         <compiler.release>11</compiler.release>
         <javadoc.source>11</javadoc.source>
         <exec.mainClass>ContinuousIntegrationServer</exec.mainClass>
-    
+
 
     </properties>
 
@@ -105,7 +105,7 @@
             <artifactId>maven-invoker</artifactId>
             <version>3.2.0</version>
         </dependency>
-             
+
         <!-- https://mvnrepository.com/artifact/javax.json/javax.json-api -->
         <dependency>
             <groupId>javax.json</groupId>

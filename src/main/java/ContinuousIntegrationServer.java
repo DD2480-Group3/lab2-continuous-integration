@@ -39,6 +39,9 @@ public class ContinuousIntegrationServer extends AbstractHandler {
         String reqPayload = request.getParameter("payload");
         String event = request.getHeader("X-Github-Event");
 
+        BuildHistory history = new BuildHistory();
+        history.navigateHistory(response,target);
+
         System.out.println(reqPayload);
         if(reqPayload != null && event != null){
             if(event.equals("push")){
@@ -48,22 +51,28 @@ public class ContinuousIntegrationServer extends AbstractHandler {
                 Git git = compiler.cloneRepo(request);
                 MavenBuilder builder = new MavenBuilder();
 
-                boolean successBuild = builder.build(Collections.singletonList("compile"), "/cloned/test/pom.xml");
+                boolean successBuild = builder.build(Collections.singletonList("compile"), "/cloned/pom.xml");
                 String status_url = notify.gitStatusAPI(compiler.getOwner(), compiler.getRepository(), compiler.getShaHash());
 
                 //Only test if build succeeded.
                 if(successBuild) {
-                    boolean successTests = builder.build(Collections.singletonList("test"), "/cloned/test/pom.xml");
+                    boolean successTests = builder.build(Collections.singletonList("test"), "/cloned/pom.xml");
                     if(successTests) {
-                        notify.postRequest("success", status_url, "Build & Tests succeeded", gitHubToken);
+                        String description = "Build & Tests succeeded";
+                        notify.postRequest("success", status_url, description, gitHubToken);
+                        history.createHistoryFile(response,compiler.getShaHash(),description);
                         response.getWriter().println("Build & Test succeeded");
                     } else {
-                        notify.postRequest("failure", status_url, "Build succeeded, but tests failed", gitHubToken);
+                        String description = "Build succeeded, but tests failed";
+                        notify.postRequest("failure", status_url, description, gitHubToken);
+                        history.createHistoryFile(response,compiler.getShaHash(),description);
                         response.getWriter().println("Build succeeded, but tests failed");
                     }
 
                 } else {
-                    notify.postRequest("failure",status_url,"Build failed", gitHubToken);
+                    String description = "Build failed";
+                    notify.postRequest("failure",status_url,description, gitHubToken);
+                    history.createHistoryFile(response,compiler.getShaHash(),description);
                     response.getWriter().println("Build failed");
                 }
 
@@ -71,9 +80,8 @@ public class ContinuousIntegrationServer extends AbstractHandler {
                 compiler.deleteRepo(git);
             }
 
-
         }
-        response.getWriter().println("CI job done");
+
 
 
 
