@@ -12,12 +12,20 @@ import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
 import org.json.JSONObject;
 
+/**
+ * Compiler class for cloning a github repository from a webhook payload.
+ * It creates a JSON object from the payload and checks if the event is a push.
+ * The repository information such as name, owner, and SHA hash are stored.
+ */
 
 public class Compiler {
     private String repository;
     private String owner;
     private String shaHash;
 
+    /**
+     * Default constructor that initializes the class variables.
+     */
     public Compiler() {
         repository = "";
         owner = "";
@@ -27,9 +35,10 @@ public class Compiler {
 
     /**
      * Method for cloning the repository from the github payload.
-     * Creates a JSON object from the payload
-     * Checks that the event is a push
-     * @return
+     * Creates a JSON object from the payload.
+     * Checks that the event is a push.
+     * @param request The request object.
+     * @return Git object.
      */
     public Git cloneRepo(HttpServletRequest request) {
 
@@ -84,18 +93,36 @@ public class Compiler {
         return null;
     }
 
+    /**
+     * Getter method for the repository owner.
+     * @return String value of the repository owner.
+     */
     public String getOwner() {
         return owner;
     }
 
+    /**
+     * Getter method for the repository name.
+     * @return String value of the repository name.
+     */
     public String getRepository() {
         return repository;
     }
 
+    /**
+     * Getter method for the commit SHA hash.
+     * @return String value of the commit SHA hash.
+     */
     public String getShaHash() {
         return shaHash;
     }
 
+    /**
+     * Method for deleting the cloned repository.
+     * Closes the Git instance and deletes the directory.
+     * @param git Git instance of the cloned repository.
+     * @throws IOException in case of error deleting the directory.
+     */
     public void deleteRepo(Git git) throws IOException {
         git.close();
         git = null;

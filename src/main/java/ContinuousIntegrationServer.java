@@ -13,11 +13,22 @@ import org.eclipse.jgit.api.Git;
 
 
 /**
- * Skeleton of a ContinuousIntegrationServer which acts as webhook
+ * Skeleton of a ContinuousIntegrationServer which acts as webhook.
  * See the Jetty documentation for API documentation of those classes.
  */
 public class ContinuousIntegrationServer extends AbstractHandler {
 
+    /** 
+    Handles incoming HTTP requests.
+    When a "push" event is received from GitHub, this method triggers continuous integration tasks, including:
+    cloning the repository, compiling the code, running tests, and updating the commit status on GitHub.
+    @param target The target of the request.
+    @param baseRequest The original unwrapped request.
+    @param request The request object.
+    @param response The response object.
+    @throws IOException If an input/output error occurs.
+    @throws ServletException If a servlet error occurs.
+    */
     public void handle(String target,
             Request baseRequest,
             HttpServletRequest request,
@@ -96,6 +107,12 @@ public class ContinuousIntegrationServer extends AbstractHandler {
     }
  
     // used to start the CI server in command line
+
+    /**
+    Main method to start the ContinuousIntegrationServer.
+    @param args The command line arguments.
+    @throws Exception If an error occurs while starting the server.
+    */
     public static void main(String[] args) throws Exception
     {
         Server server = new Server(8080);
