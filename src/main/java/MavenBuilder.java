@@ -11,6 +11,9 @@ import java.util.List;
 
 public class MavenBuilder {
 
+    /**
+    Represents the MavenBuilder class that is used to automate a build of a Github repository.
+    */
     public MavenBuilder() {
 
     }
@@ -19,6 +22,10 @@ public class MavenBuilder {
      * Tries to build & test the repository that is in the given path.
      * Reads the pom.xml file of the given directory then tries to build and test the code with
      * the help of maven.
+     * @param goals the list of goals that are to be executed
+     * @param toCompile the path of the pom.xml file of the repository
+     *@return a boolean value indicating whether the build was successful (exit code = 0) or not
+     *@throws MavenInvocationException if an error occurs during the build process
      */
     public boolean build(List<String> goals, String toCompile) {
         Path currentRelativePath = Paths.get("");

@@ -5,22 +5,30 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 
-
+/**
+A class for sending notifications to Github repository.
+*/
 public class Notification {
 
     /**
      * Method for creating the URL for the Git Status API
-     */
+     * 
+     * Generates the URL for the Github Commit Status API.
+     * @param owner the owner of the repository
+     * @param repository the name of the repository
+     * @param shaHash the SHA hash of the commit
+     * @return the URL for the Github Commit Status API 
+    */
     public String gitStatusAPI(String owner, String repository, String shaHash) {
         return "https://api.github.com/repos/" + owner + "/" + repository + "/statuses/" + shaHash;
     }
 
     /**
      * Method for creation JsonObject used to send to the Git, following: "https://docs.github.com/en/rest/commits/statuses?apiVersion=2022-11-28#create-a-commit-status".
-     * @param status
-     * @param gitStatusAPI
-     * @param description
-     * @return
+     * @param status : the status of the commit
+     * @param gitStatusAPI : the URL for the Github Commit Status API
+     * @param description : the description of the status
+     * @return the JSON object for sending a commit status to Github
      */
     public JsonObject createJSONObj(String status, String gitStatusAPI , String description) {
         JsonObject jsonObject = Json.createObjectBuilder()
@@ -34,10 +42,11 @@ public class Notification {
 
     /**
      * Method for creating and sending an HTTP POST request to the gitAPI.
-     * @param status
-     * @param status_url
-     * @param description
-     * @throws IOException
+     * @param status : the status of the commit
+     * @param status_url : the URL for the Github Commit Status API
+     * @param description : the description of the status
+     * @param githubToken the Github access token
+     * @throws IOException if there is an error in sending the request.
      */
     public void postRequest(String status, String status_url ,String description, String githubToken) throws IOException {
 
