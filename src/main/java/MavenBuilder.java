@@ -9,23 +9,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ Represents the MavenBuilder class that is used to automate a build of a Github repository.
+ */
 public class MavenBuilder {
 
-    /**
-    Represents the MavenBuilder class that is used to automate a build of a Github repository.
-    */
-    public MavenBuilder() {
-
-    }
 
     /**
-     * Tries to build & test the repository that is in the given path.
+     * Tries to build and test the repository that is in the given path.
      * Reads the pom.xml file of the given directory then tries to build and test the code with
      * the help of maven.
-     * @param goals the list of goals that are to be executed
-     * @param toCompile the path of the pom.xml file of the repository
-     *@return a boolean value indicating whether the build was successful (exit code = 0) or not
-     *@throws MavenInvocationException if an error occurs during the build process
+     * @param goals the list of goals that are to be executed.
+     * @param toCompile the path of the pom.xml file of the repository.
+     * @return a boolean value indicating whether the build was successful (exit code = 0) or not.
+     * @throws MavenInvocationException if an error occurs during the build process.
      */
     public boolean build(List<String> goals, String toCompile) {
         Path currentRelativePath = Paths.get("");
@@ -38,12 +35,6 @@ public class MavenBuilder {
         Invoker invoker = new DefaultInvoker();
         invoker.setMavenHome(new File(System.getenv().get("MAVEN_HOME")));
 
-        /**try {
-         InvocationResult result = invoker.execute( request );
-         return result.getExitCode() == 0;
-         } catch (MavenInvocationException e) {
-         return false;
-         }**/
 
         try {
             InvocationResult result = invoker.execute(request);

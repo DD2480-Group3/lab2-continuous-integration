@@ -35,9 +35,10 @@ public class Compiler {
 
     /**
      * Method for cloning the repository from the github payload.
-     * Creates a JSON object from the payload
-     * Checks that the event is a push
-     * @return
+     * Creates a JSON object from the payload.
+     * Checks that the event is a push.
+     * @param request The request object.
+     * @return Git object.
      */
     public Git cloneRepo(HttpServletRequest request) {
 

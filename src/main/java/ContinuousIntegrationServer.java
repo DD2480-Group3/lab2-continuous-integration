@@ -13,7 +13,7 @@ import org.eclipse.jgit.api.Git;
 
 
 /**
- * Skeleton of a ContinuousIntegrationServer which acts as webhook
+ * Skeleton of a ContinuousIntegrationServer which acts as webhook.
  * See the Jetty documentation for API documentation of those classes.
  */
 public class ContinuousIntegrationServer extends AbstractHandler {
