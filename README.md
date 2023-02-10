@@ -3,8 +3,6 @@
 
 This repository contains the code and tests for a CI server. The CI server clones a repository from GitHub as specified in the payload and compiles the code using maven. The tests in the repository are also run using maven.
 
-## Structure of repository
-
 ## Requirements
 
 Java version 11  
@@ -12,7 +10,7 @@ ngrok
 Maven
 
 ## Set up
-1. Clone the branch called "assessment"
+1. Clone the branch called "main"
 2. Go to Settings >> Developer settings >> Personal access tokens and generate a Github token
 3. Copy this GitHub token key and insert it into the .env file
 3. For Windows users: Be sure to have the MAVEN_HOME path configured correctly.
@@ -31,6 +29,17 @@ Maven
 ## How to view the build history
 1. Navigate to the URL that was generated from ngrok + "/history/" (e.g. https://81e7-213-64-193-154.ngrok.io/history/)
 2. Click on the build date/time which will redirect to a unique URL which displays relevant build information.
+
+## How to generate Javadoc 
+1. Run 'mvn javadoc:javadoc" in the terminal. 
+2. Go to the directory "target/site/apidocs/"
+3. Open the "allclasses-index.html" file, which will display the javadoc for all classes. 
+
+## Structure of repository for projects that uses the CI servers features 
+The projects that are meant to use the features of the CI servers needs to be a maven project. 
+So it needs to have an pom.xml file and then follow the directory structure of maven projects. 
+E.g in a directory called "src/main/java" application and library soruces should be stored.
+An simple example of a maven project is found in the branch called "assessment".  
 
 ## Implementation
 
@@ -59,6 +68,14 @@ The history feature will list every file located in the "./web/history path" of 
 
 The history feature was tested by verifying that files in the "./web/history" directory located on the server can be listed and that new files are generated properly.
 
+### Demo 
+Here is a video showcasing how the notifcation and history feature works. 
+
+
+
+https://user-images.githubusercontent.com/28140734/218104063-fc404833-8717-4aa4-add8-a2201e41a6b9.mp4
+
+ 
 
 ### Statement of contribution
 
@@ -69,6 +86,7 @@ Worked on the unit tests for compilation and building.
 Claudia Berlin: 
 Helped to set up some parts of the compilation, building and testing parts. 
 Worked on the notification feature that was implemented using REST API to create commit statuses.
+Refactored the history feature and implemented a method that takes the build and test information and writes it given files.  
 Also, tested the whole system to see that it worked properly. 
 
 Robert Scholz:
